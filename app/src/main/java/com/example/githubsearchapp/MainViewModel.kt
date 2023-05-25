@@ -3,6 +3,7 @@ package com.example.githubsearchapp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubsearchapp.data.local.Repo
+import com.example.githubsearchapp.data.local.User
 import com.example.githubsearchapp.domain.repository.GithubRepository
 import com.example.githubsearchapp.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +28,9 @@ class MainViewModel @Inject constructor(
 
     private val _isSearching = MutableStateFlow(false)
     val isSearching = _isSearching.asStateFlow()
+
+    private val _user = MutableStateFlow(User())
+    val user = _user.asStateFlow()
 
     private val _repo = MutableStateFlow(listOf<Repo>())
     val repo = searchText
@@ -55,6 +59,7 @@ class MainViewModel @Inject constructor(
                 }
 
                 is Resource.Success -> {
+                    _user.value = resultUser.data ?: User()
                     when (val resultRepo = repository.getRepos(userId)) {
                         is Resource.Error -> {
                             resultRepo.message
