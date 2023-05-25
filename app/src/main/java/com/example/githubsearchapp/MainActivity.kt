@@ -24,6 +24,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -31,84 +33,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.githubsearchapp.ui.theme.GithubSearchAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import coil.compose.AsyncImage
+import com.example.githubsearchapp.ui.views.GithubSearchScreen
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             GithubSearchAppTheme {
-                val viewModel = viewModel<MainViewModel>()
-                val searchText by viewModel.searchText.collectAsState()
-                val user by viewModel.user.collectAsState()
-                val repos by viewModel.repo.collectAsState()
-                val isSearching by viewModel.isSearching.collectAsState()
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    TextField(
-                        value = searchText,
-                        onValueChange = viewModel::onSearchTextChange,
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text(text = "Search") }
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    if (isSearching) {
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.align(Alignment.Center)
-                            )
-                        }
-                    } else {
-                        AsyncImage(
-                            model = user.avatar_url,
-                            contentDescription = user.name,
-                            modifier = Modifier
-                                .width(150.dp)
-                                .height(150.dp)
-                        )
-                        Text(text = user.name)
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f)
-                        ) {
-                            items(repos) { repo ->
-                                Card(
-                                    shape = RoundedCornerShape(8.dp),
-                                    modifier = Modifier
-                                        .padding(16.dp)
-                                        .fillMaxWidth(),
-                                    elevation = CardDefaults.cardElevation(
-                                        defaultElevation =  10.dp,
-                                    )
-                                ) {
-                                    Column {
-                                        Text(
-                                            text = repo.name,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(vertical = 16.dp)
-                                        )
-                                        repo.description?.let {
-                                            Text(
-                                                text = it,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(vertical = 16.dp)
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
+                GithubSearchScreen()
             }
         }
     }
