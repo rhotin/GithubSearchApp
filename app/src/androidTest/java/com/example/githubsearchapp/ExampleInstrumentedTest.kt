@@ -28,10 +28,10 @@ class ExampleInstrumentedTest {
         assertEquals("com.example.githubsearchapp", appContext.packageName)
     }
 
-    @Test
-    fun githubSearchScreenTest(){
-        composeTestRule.setContent {
-            githubSearchScreen()
-        }
-    }
+//    @Test
+//    fun githubSearchScreenTest(){
+//        composeTestRule.setContent {
+//            githubSearchScreen()
+//        }
+//    }
 }

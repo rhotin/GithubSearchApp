@@ -74,6 +74,7 @@ fun githubSearchScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
+                    .height(30.dp)
             ) {
                 items(repos) { repo ->
                     Card(
