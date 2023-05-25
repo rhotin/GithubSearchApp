@@ -29,7 +29,7 @@ import com.example.githubsearchapp.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GithubSearchScreen() {
+fun githubSearchScreen() {
     val viewModel = viewModel<MainViewModel>()
     val searchText by viewModel.searchText.collectAsState()
     val user by viewModel.user.collectAsState()
