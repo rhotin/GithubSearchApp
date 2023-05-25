@@ -29,7 +29,7 @@ import com.example.githubsearchapp.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GithubSearchScreen(){
+fun GithubSearchScreen() {
     val viewModel = viewModel<MainViewModel>()
     val searchText by viewModel.searchText.collectAsState()
     val user by viewModel.user.collectAsState()
@@ -63,7 +63,13 @@ fun GithubSearchScreen(){
                     .height(150.dp)
                     .align(Alignment.CenterHorizontally)
             )
-            Text(text = user.name, modifier = Modifier.align(Alignment.CenterHorizontally))
+            user.name?.let {
+                Text(
+                    text = it,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                )
+            }
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -76,16 +82,18 @@ fun GithubSearchScreen(){
                             .padding(16.dp)
                             .fillMaxWidth(),
                         elevation = CardDefaults.cardElevation(
-                            defaultElevation =  10.dp,
+                            defaultElevation = 10.dp,
                         )
                     ) {
                         Column {
-                            Text(
-                                text = repo.name,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 16.dp)
-                            )
+                            repo.name?.let {
+                                Text(
+                                    text = it,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 16.dp)
+                                )
+                            }
                             repo.description?.let {
                                 Text(
                                     text = it,
